@@ -1,0 +1,7 @@
+.venv/
+analysis/
+tmp/
+*.raw
+*.log
+__pycache__/
+.DS_Store

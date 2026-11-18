@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>时序绘图指令还原 · Three.js</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div>
+        <p class="eyebrow">VIDEO → DRAWING INSTRUCTIONS → THREE.JS</p>
+        <h1>时序笔触重建</h1>
+      </div>
+      <div class="status" id="status" role="status">等待绘图指令</div>
+    </header>
+
+    <section class="stage" id="stage">
+      <canvas id="canvas" aria-label="由椭圆、贝塞尔笔触和软笔刷实时绘制的动画"></canvas>
+      <div class="loading" id="loading"><span></span> 正在装载笔触程序…</div>
+    </section>
+
+    <section class="controls">
+      <button id="play" class="primary" type="button">暂停</button>
+      <button id="restart" type="button">回到起点</button>
+      <label class="scrubber">
+        <span>时间</span>
+        <input id="time" type="range" min="0" max="5.166667" step="0.001" value="0">
+      </label>
+      <output id="timeLabel">0.000 s</output>
+    </section>
+
+    <pre id="diagnostic" class="diagnostic" role="alert" hidden></pre>
+
+    <section class="info">
+      <article>
+        <h2>运行时</h2>
+        <p>页面加载 <code>strokes.bin</code> 与分析生成的低频基底。每条笔触含几何、颜色、透明度和 13 组时间关键帧；Three.js 在 GPU 中插值位置、缩放、旋转、亮度与透明度，并按椭圆、线段、贝塞尔曲线和软笔刷函数逐层绘制。</p>
+      </article>
+      <article>
+        <h2>指令统计</h2>
+        <dl id="stats"><dt>状态</dt><dd>等待数据</dd></dl>
+      </article>
+    </section>
+  </main>
+  <script type="module" src="src/main.js?v=3"></script>
+</body>
+</html>
