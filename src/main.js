@@ -1,4 +1,4 @@
-import { StrokePlayer } from './player.js?v=3';
+import { StrokePlayer } from './player.js?v=4';
 
 const canvas = document.getElementById('canvas');
 const status = document.getElementById('status');
@@ -82,7 +82,7 @@ function syncTime() {
 }
 requestAnimationFrame(syncTime);
 
-player.load('assets/strokes.bin?v=3').then(() => {
+player.load('assets/strokes.bin?v=4').then(() => {
   loading.classList.add('hidden');
   playButton.disabled = false;
 }).catch((error) => {

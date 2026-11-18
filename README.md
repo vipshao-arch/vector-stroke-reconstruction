@@ -25,7 +25,7 @@
 node tools/serve.js
 ```
 
-默认访问 `http://127.0.0.1:8765/`。可用 `PORT=8791 node tools/serve.js` 指定端口。播放器支持暂停、拖动时间轴和从起点重播。
+默认访问 `http://127.0.0.1:8765/`。可用 `$env:PORT='8791'; node tools/serve.js` 指定端口。播放器支持暂停、拖动时间轴和从起点重播。
 
 ## 指令格式
 

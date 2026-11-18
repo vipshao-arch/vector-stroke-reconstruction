@@ -11,6 +11,8 @@ const types = {
   '.css': 'text/css; charset=utf-8',
   '.bin': 'application/octet-stream',
   '.json': 'application/json; charset=utf-8',
+  '.jpg': 'image/jpeg',
+  '.png': 'image/png',
   '.txt': 'text/plain; charset=utf-8',
 };
 

@@ -1,5 +1,5 @@
-import * as THREE from './three.module.js?v=3';
-import { KEYFRAMES, KEYFRAME_FIELDS, parseInstructions } from './instructions.js?v=3';
+import * as THREE from './three.module.js?v=4';
+import { KEYFRAMES, KEYFRAME_FIELDS, parseInstructions } from './instructions.js?v=4';
 
 const VERTEX_SHADER = /* glsl */ `
   precision highp float;
@@ -16,6 +16,7 @@ const VERTEX_SHADER = /* glsl */ `
   uniform vec3 uCameraA;
   uniform vec3 uCameraB;
   varying vec2 vLocal;
+  varying vec2 vEllipseLocal;
   varying vec2 vStart;
   varying vec2 vControl;
   varying vec2 vEnd;
@@ -120,8 +121,8 @@ const VERTEX_SHADER = /* glsl */ `
     float s = sin(rotation);
     mat2 turn = mat2(c, s, -s, c);
     vec2 quadPosition = position.xy;
-    vec2 local = (quadPosition - 0.5) * size * 2.2;
-    local = turn * local * max(scale, 0.01);
+    vec2 ellipseLocal = (quadPosition - 0.5) * size * 2.2;
+    vec2 local = turn * ellipseLocal * max(scale, 0.01);
     start = turn * start * max(scale, 0.01);
     control = turn * control * max(scale, 0.01);
     end = turn * end * max(scale, 0.01);
@@ -131,7 +132,8 @@ const VERTEX_SHADER = /* glsl */ `
       dot(uCameraB.xy, world) + uCameraB.z
     ) + vec2(dx + wobble * 0.18, dy - wobble * 0.12);
     vLocal = local;
-    vSize = size * max(scale, 0.01);
+    vEllipseLocal = ellipseLocal;
+    vSize = size;
     vWidth = max(p1.z * max(scale, 0.01), 0.55);
     vStart = start;
     vControl = control;
@@ -145,6 +147,7 @@ const VERTEX_SHADER = /* glsl */ `
 const FRAGMENT_SHADER = /* glsl */ `
   precision highp float;
   varying vec2 vLocal;
+  varying vec2 vEllipseLocal;
   varying vec2 vStart;
   varying vec2 vControl;
   varying vec2 vEnd;
@@ -170,7 +173,7 @@ const FRAGMENT_SHADER = /* glsl */ `
     float coverage = 0.0;
     if (vKind < 0.5) {
       // Oriented elliptical paint stroke.
-      vec2 unit = vec2(vLocal.x / max(vSize.x, 0.01), vLocal.y / max(vSize.y, 0.01));
+      vec2 unit = vec2(vEllipseLocal.x / max(vSize.x, 0.01), vEllipseLocal.y / max(vSize.y, 0.01));
       float q = length(unit);
       coverage = 1.0 - smoothstep(0.82, 1.0, q);
     } else if (vKind < 1.5) {

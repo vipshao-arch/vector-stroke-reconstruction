@@ -42,6 +42,7 @@ h1 { font-size: clamp(25px, 4vw, 38px); line-height: 1.1; margin: 0; font-weight
 canvas { display: block; width: 100%; height: 100%; }
 .loading { position: absolute; inset: 0; display: grid; place-content: center; gap: 12px; color: #22213c; font-size: 14px; background: #9994c3; transition: opacity .35s; }
 .loading.hidden { opacity: 0; pointer-events: none; }
+.loading[hidden] { display: none; }
 .loading span { width: 28px; height: 28px; margin: auto; border: 3px solid #c9c4e2; border-top-color: #6e55bb; border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
